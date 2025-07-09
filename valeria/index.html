@@ -1,25 +1,203 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Presentation</title>
+  <link rel="stylesheet" href="index.css">
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .chat-container {
+      width: 400px;
+      max-width: 90vw;
+      height: 600px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #007bff;
+      color: white;
+      padding: 1rem;
+      font-weight: bold;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .message {
+      max-width: 70%;
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      line-height: 1.3;
+      word-wrap: break-word;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .message.user {
+      align-self: flex-end;
+      background: #007bff;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .message.bot {
+      align-self: flex-start;
+      background: #f1f0f0;
+      color: #333;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 0.5rem;
+      margin-top: 20rem;
+      background: white;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .chat-input input:focus {
+      border-color: #007bff;
+    }
+    .chat-input button {
+      margin-left: 0.5rem;
+      padding: 0 1rem;
+      border: none;
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .chat-input button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
 <body>
-  <div class="web"> 
-  <div class="chat"></div > 
+<div class="web">
+  <div class="chat">
+    <h1 class="texto-chat">Chat</h1>
+    <div class="chat-box">
+      <div class="chat-messages" id="chatMessages" aria-live="polite" aria-relevant="additions"></div>
+      <form class="chat-input" id="chatForm" aria-label="Send message form">
+        <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off" required aria-required="true" />
+        <button type="submit" aria-label="Send message">Send</button>
+      </form>
+    </div>
+  </div>
   <div class="contenedor">
     <div class="profile">
-      <div class="autor"></div>
-       <h2 class="nombre"></h2>
-    </div>    
-    <div class="feedback">
-      <p class="texto">Que te parecio la charla </p> 
-      <div class="feed"></div> 
+      <div style="align-items: center; justify-content: center; text-align: center">
+        <img class="autor" src="https://st5.depositphotos.com/1000507/62260/v/450/depositphotos_622600456-stock-illustration-male-psychologist-avatar-mental-health.jpg" alt="Profile">
+      </div>
+      <div>
+        <p class="nombre">Gabriel Gomez</p>
+        <p class="descripcion">Web Developer</p>
+      </div>
     </div>
-    <div class= "share">
-      <p class="texto">comparte tu charla</p> 
-      <div class="feed">
-
-      </div> </div>
-   
-      <div class="end">
-      <button>terminar la conversación</button>
+    <div class="feedback">
+      <p class="texto">¿Que te pareció la charla?</p>
+      <div class="emoji-reacciones">
+        <span class="btn-good">😃</span>
+        <span class="btn-regular">😐</span>
+        <span class="btn-bad">☹️</span>
+      </div>
+    </div>
+    <div class="share">
+      <p class="texto">Comparte tu charla</p>
+      <div class="social-buttons">
+        <button class="btn-facebook">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+        <button class="btn-twitter">
+          <i class="fab fa-twitter"></i> Twitter
+        </button>
+        <button class="btn-instagram">
+          <i class="fab fa-instagram"></i> Instagram
+        </button>
+      </div>
+    </div>
+    <div class="end">
+      <button>Terminar la conversación</button>
     </div>
   </div>
 </div>
+<script>
+  const chatMessages = document.getElementById('chatMessages');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+
+  // Function to add a message to chat window
+  function addMessage(text, sender = 'user') {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', sender);
+    msgDiv.textContent = text;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+  }
+
+  // Simulate bot response with a delay
+  function botResponse(userMsg) {
+    const responses = [
+      "I'm just a dummy bot!",
+      "You said: " + userMsg,
+      "That's interesting!",
+      "Tell me more.",
+      "I don't have real intelligence yet.",
+      "Let's chat more!",
+      "Can you explain that?"
+    ];
+    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    setTimeout(() => addMessage(randomResponse, 'bot'), 1000);
+  }
+
+  // Handle form submit
+  chatForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (!message) return;
+    addMessage(message, 'user');
+    chatInput.value = '';
+    botResponse(message);
+  });
+
+  // Optional: greet on load
+  window.addEventListener('load', () => {
+    addMessage("!Hola; soy tu psicologo Gabriel\n" +
+            "vengo ayudarte o solucionar tu problema\n" +
+            "cuentame como te sientes el dia de hoy", 'bot');
+  });
+</script>
 </body>
+</html>

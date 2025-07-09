@@ -39,19 +39,21 @@ body {
 }
 
 .profile {
-  background-color: #AFC7F0;
-  padding: 12px;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 8px;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #AFC7F0;
+  padding: 16px;
+  border-radius: 10px;
 }
 
 .autor {
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
+  flex: 1;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   object-fit: cover;
+  border: 2px solid white;
 }
 
 .nombre {
@@ -111,6 +113,12 @@ body {
 
 .texto {
   color: white;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.texto-chat {
+  color: black;
   font-weight: bold;
   margin-bottom: 6px;
 }
