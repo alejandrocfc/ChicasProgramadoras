@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title><html lang="es">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Camelia - Dulces Mexicanos y Colombianos</title>
+    <style>
+      /* Estilos generales */
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #FFD1DC; /* Fondo rosa pastel */
+        color: #000;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      /* Animación de dulces flotando */
+      .floating-candy {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        animation: float 6s ease-in-out infinite;
+        opacity: 0.7;
+        z-index: 1;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(10deg); }
+      }
+
+      /* Encabezado con banderas */
+      header {
+        background: linear-gradient(90deg, #FF69B4, #FFB6C1);
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .logo {
+        font-size: 3.5em;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin: 10px 0;
+      }
+
+      .flags {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 15px 0;
+      }
+
+      .flags img {
+        width: 80px;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Barra de navegación */
+      nav {
+        background-color: #FF69B4;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      nav a:hover {
+        color: #FFD700; /* Dorado al pasar el mouse */
+      }
+
+      /* Botón de registro en esquina superior derecha */
+      .register-btn {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #FF1493;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+        z-index: 10;
+      }
+
+      .register-btn:hover {
+        background: #C71585;
+      }
+
+      /* Carrito de compras */
+      .cart-btn {
+        position: absolute;
+        right: 150px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #FF69B4;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .cart-btn:hover {
+        background: #FF1493;
+      }
+
+      .cart-count {
+        background: #FF1493;
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+
+      /* Modal de registro */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: linear-gradient(135deg, #FFD1DC, #FFB6C1);
+        margin: 5% auto;
+        padding: 40px;
+        border-radius: 20px;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        position: relative;
+        border: 2px solid #FF69B4;
+        animation: modalFadeIn 0.4s;
+      }
+
+      @keyframes modalFadeIn {
+        from {opacity: 0; transform: translateY(-50px);}
+        to {opacity: 1; transform: translateY(0);}
+      }
+
+      .close {
+        position: absolute;
+        right: 25px;
+        top: 20px;
+        color: #FF69B4;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .close:hover {
+        color: #C71585;
+        transform: rotate(90deg);
+      }
+
+      /* Sección de productos */
+      .products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .product-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        width: 250px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .product-card img {
+        width: 100%;
+        border-radius: 10px;
+        height: 180px;
+        object-fit: cover;
+        border: 2px solid #FFB6C1;
+      }
+
+      .product-card h3 {
+        color: #FF1493;
+        margin: 10px 0;
+      }
+
+      .product-card .price {
+        font-weight: bold;
+        color: #FF69B4;
+        font-size: 1.2em;
+      }
+
+      .product-card button {
+        background: #FF69B4;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.3s;
+        font-weight: bold;
+        width: 100%;
+      }
+
+      .product-card button:hover {
+        background: #FF1493;
+        transform: translateY(-2px);
+      }
+
+      /* Formulario de registro */
+      .register-form h2 {
+        color: #FF1493;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      }
+
+      .register-form input {
+        width: 100%;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border: 2px solid #FFB6C1;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+        background-color: rgba(255,255,255,0.8);
+      }
+
+      .register-form input:focus {
+        outline: none;
+        border-color: #FF69B4;
+        box-shadow: 0 0 5px rgba(255,105,180,0.5);
+      }
+
+      .register-form button {
+        background: #FF69B4;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 20px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+
+      .register-form button:hover {
+        background: #FF1493;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      }
+
+      /* Notificación de carrito */
+      .cart-notification {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: #FF69B4;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+        display: none;
+        animation: slideIn 0.3s, fadeOut 0.5s 2.5s forwards;
+      }
+
+      @keyframes slideIn {
+        from {right: -100px; opacity: 0;}
+        to {right: 20px; opacity: 1;}
+      }
+
+      @keyframes fadeOut {
+        from {opacity: 1;}
+        to {opacity: 0;}
+      }
+
+      /* Modal del carrito */
+      .cart-modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        right: 20px;
+        top: 80px;
+        width: 350px;
+        max-height: 70vh;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        padding: 20px;
+        overflow-y: auto;
+        animation: cartFadeIn 0.3s;
+      }
+
+      @keyframes cartFadeIn {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+      }
+
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #FFB6C1;
+        padding-bottom: 10px;
+      }
+
+      .cart-header h2 {
+        color: #FF1493;
+        margin: 0;
+      }
+
+      .close-cart {
+        color: #FF69B4;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: none;
+        border: none;
+        padding: 0 10px;
+      }
+
+      .close-cart:hover {
+        color: #C71585;
+        transform: rotate(90deg);
+      }
+
+      .cart-item-info {
+        flex-grow: 1;
+      }
+
+      .cart-item-name {
+        font-weight: bold;
+        color: #FF69B4;
+      }
+
+      .cart-item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+      }
+
+      .quantity-btn {
+        background: #FFB6C1;
+        color: white;
+        border: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .quantity-btn:hover {
+        background: #FF69B4;
+      }
+
+      .remove-item {
+        background: #FF6B6B;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .remove-item:hover {
+        background: #FF5252;
+      }
+
+      .cart-total {
+        font-weight: bold;
+        text-align: right;
+        margin-top: 15px;
+        font-size: 1.2em;
+        color: #FF69B4;
+        padding-top: 10px;
+        border-top: 2px solid #FFB6C1;
+      }
+
+      .checkout-btn {
+        background: #FF69B4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        margin-top: 15px;
+        transition: all 0.3s;
+      }
+
+      .checkout-btn:hover {
+        background: #FF1493;
+        transform: translateY(-2px);
+      }
+
+      .cart-empty {
+        text-align: center;
+        color: #FF69B4;
+        padding: 20px 0;
+      }
+
+      /* Redes sociales */
+      .social-media {
+        text-align: center;
+        margin: 30px 0;
+      }
+
+      .social-media a {
+        margin: 0 15px;
+        display: inline-block;
+        transition: transform 0.3s;
+      }
+
+      .social-media a:hover {
+        transform: scale(1.2);
+      }
+
+      .social-media img {
+        width: 50px;
+        height: 50px;
+      }
+
+      /* Pie de página */
+      footer {
+        background: linear-gradient(90deg, #FF69B4, #FFB6C1);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+      }
+
+      /* Sección Quiénes Somos */
+      .about-us {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        margin-bottom: 30px;
+      }
+
+      .about-us h2 {
+        color: #FF1493;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .about-us p {
+        text-align: justify;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      /* Estilos responsive */
+      @media (max-width: 768px) {
+        .logo {
+          font-size: 2.5em;
+        }
+
+        .flags img {
+          width: 60px;
+        }
+
+        nav a {
+          margin: 0 8px;
+          font-size: 14px;
+        }
+
+        .cart-btn {
+          right: 120px;
+          padding: 6px 15px;
+          font-size: 14px;
+        }
+
+        .register-btn {
+          right: 10px;
+          padding: 6px 15px;
+          font-size: 14px;
+        }
+
+        .product-card {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .cart-modal {
+          width: 90%;
+          right: 5%;
+          top: 100px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 2em;
+        }
+
+        nav {
+          padding: 10px 5px;
+        }
+
+        nav a {
+          margin: 0 5px;
+          font-size: 12px;
+        }
+
+        .cart-btn {
+          right: 100px;
+          padding: 5px 10px;
+        }
+
+        .register-btn {
+          right: 5px;
+          padding: 5px 10px;
+        }
+
+        .modal-content {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+  <!-- Dulces flotantes -->
+  <img src="https://cdn-icons-png.flaticon.com/512/3081/3081840.png" class="floating-candy" style="top: 20%; left: 10%;">
+  <img src="https://cdn-icons-png.flaticon.com/512/3081/3081840.png" class="floating-candy" style="top: 50%; left: 80%;">
+  <img src="https://cdn-icons-png.flaticon.com/512/3081/3081840.png" class="floating-candy" style="top: 70%; left: 20%;">
+  <img src="https://cdn-icons-png.flaticon.com/512/3081/3081840.png" class="floating-candy" style="top: 30%; left: 60%;">
+
+  <!-- Encabezado con logo y banderas -->
+  <header>
+    <div class="logo">～🌸 𝐂𝐀𝐌𝐄𝐋𝐈𝐀 🌸～</div>
+    <p> ꧁༺ ¡Dulces tradicionales de México y Colombia! ༻꧂ </p>
+    <div class="flags">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg" alt="Bandera de México">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg" alt="Bandera de Colombia">
+    </div>
+  </header>
+
+  <!-- Barra de navegación con botón de registro y carrito -->
+  <nav>
+
+    <button class="cart-btn" id="cartButton">
+      <span>🛒 Carrito</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="register-btn" id="openRegister">Regístrate</button>
+  </nav>
+
+  <!-- Sección de productos -->
+  <section id="productos" class="products">
+    <div class="product-card">
+      <img src="https://mundodulces17.com/wp-content/uploads/2024/01/FUEGO-PALETA.jpg" alt="Paletas Mexicanas">
+      <h3>Paletas Mexicanas</h3>
+      <p>Deliciosas paletas picantes. Paquete con 12 unidades.</p>
+      <p class="price">$16.500 PAQUETE </p>
+      <button class="add-to-cart" data-product="Paletas Mexicanas (paquete x12)" data-price="16500">Agregar al carrito</button>
+    </div>
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/913m9cwq0ZL._SL1500_.jpg" alt="Gomitas Colombianas">
+      <h3>Gomitas Colombianas</h3>
+      <p>Gomitas deliciosas</p>
+      <p class="price">$5.000 PAQUETE </p>
+      <button class="add-to-cart" data-product="Gomitas Colombianas" data-price="5000">Agregar al carrito</button>
+    </div>
+    <div class="product-card">
+      <img src="https://mail.google.com/mail/u/0?ui=2&ik=fa66a9db2f&attid=0.1&permmsgid=msg-a:r7940850519935628803&th=197c7bdabe879bea&view=att&disp=safe&realattid=197c7b90670b34fa9081&zw" alt="Gomitas enchiladas">
+      <h3>Gomitas enchiladas</h3>
+      <p>Deliciosas hechas en casa.</p>
+      <p class="price">$ 4.000   BOLSITA </p>
+      <button class="add-to-cart" data-product="Gomitas enchiladas" data-price="4000">Agregar al carrito</button>
+    </div>
+  </section>
+
+  <!-- Sección Quiénes Somos -->
+  <div class="about-us">
+    <h2>🌸 Quiénes Somos 🌸</h2>
+    <p>En Camelia nos dedicamos a traer los sabores más auténticos de México y Colombia directamente a tu mesa. Nuestra pasión por los dulces tradicionales nos ha llevado a seleccionar cuidadosamente los mejores productos para ofrecerte una experiencia única.</p>
+    <p>Fundada en 2025, nuestra misión es compartir la riqueza cultural de estos dos países a través de sus dulces tradicionales, manteniendo siempre la calidad y autenticidad que los caracteriza.</p>
+    <p>¡Déjate llevar por el sabor y descubre el encanto de nuestros dulces!</p>
+  </div>
+
+  <!-- Modal de registro (oculto inicialmente) -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="register-form">
+        <h2>Regístrate para comprar</h2>
+        <input type="text" placeholder="Nombre completo" required>
+        <input type="email" placeholder="Correo electrónico" required>
+        <input type="password" placeholder="Contraseña" required>
+        <button type="submit">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal del carrito -->
+  <div id="cartModal" class="cart-modal">
+    <div class="cart-header">
+      <h2>🛒 Tu Carrito</h2>
+      <button class="close-cart">&times;</button>
+    </div>
+    <div id="cartItemsContainer"></div>
+    <div class="cart-total">Total: $<span id="cartTotal">0</span></div>
+    <button class="checkout-btn" id="checkoutButton">Finalizar Compra</button>
+  </div>
+
+  <!-- Notificación de carrito -->
+  <div class="cart-notification" id="cartNotification">
+    ¡Producto agregado al carrito!
+  </div>
+
+  <!-- Redes sociales -->
+  <div class="social-media">
+    <a href="https://www.facebook.com/" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook">
+    </a>
+    <a href="https://www.instagram.com/" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+  </div>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2025 Camelia - Dulces Mexicanos y Colombianos.</p>
+    <p>📍 Dirección:uva de la armonia, Ciudad de colombia </p>
+    <p>📞 Teléfono: +57 3002798429</p>
+    <p>✉️ Email: info@cameliadulces.com</p>
+  </footer>
+
+  <script>
+    // Variables para el carrito
+    let cart = [];
+    const cartCount = document.getElementById('cartCount');
+    const cartNotification = document.getElementById('cartNotification');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart ');
+    const cartModal = document.getElementById('cartModal');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const cartTotalElement = document.getElementById('cartTotal');
+    const closeCartButton = document.querySelector('.close-cart ');
+    const checkoutButton = document.getElementById('checkoutButton');
+
+    // JavaScript para controlar el modal de registro
+    const registerModal = document.getElementById("registerModal");
+    const registerBtn = document.getElementById("openRegister");
+    const registerClose = document.getElementsByClassName("close")[0];
+
+    registerBtn.onclick = function() {
+      registerModal.style.display = "block";
+    }
+
+    registerClose.onclick = function() {
+      registerModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == registerModal) {
+        registerModal.style.display = "none";
+      }
+      if (event.target == cartModal) {
+        cartModal.style.display = "none";
+      }
+    }
+
+    // Función para agregar al carrito
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const productName = this.getAttribute('data-product');
+        const productPrice = parseInt(this.getAttribute('data-price'));
+
+        // Verificar si el producto ya está en el carrito
+        const existingItem = cart.find(item => item.name === productName);
+
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({
+            name: productName,
+            price: productPrice,
+            quantity: 1
+          });
+        }
+
+        updateCart();
+
+        // Mostrar notificación
+        cartNotification.style.display = 'block';
+        cartNotification.textContent = `¡${productName} agregado al carrito!`;
+
+        // Reiniciar animación
+        cartNotification.style.animation = 'none';
+        void cartNotification.offsetWidth; // Truco para reiniciar animación
+        cartNotification.style.animation = 'slideIn 0.3s, fadeOut 0.5s 2.5s forwards';
+
+        // Agregar animación al botón
+        this.textContent = '✓ Agregado';
+        this.style.backgroundColor = ' #4CAF50 ';
+        setTimeout(() => {
+          this.textContent = 'Agregar al carrito';
+          this.style.backgroundColor = '#FF69B4';
+        }, 2000);
+      });
+    });
+
+    // Función para actualizar el carrito
+    function updateCart() {
+      // Actualizar contador
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+
+      // Actualizar modal del carrito
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>';
+        cartTotalElement.textContent = '0';
+        checkoutButton.style.display = 'none';
+      } else {
+        // Calcular total
+        let total = 0;
+        cartItemsContainer.innerHTML = '';
+
+        // Mostrar items
+        cart.forEach((item, index) => {
+          const itemTotal = item.price * item.quantity;
+          total += itemTotal;
+
+          const cartItemElement = document.createElement('div');
+          cartItemElement.className = 'cart-item';
+          cartItemElement.innerHTML = `
+                          <div class="cart-item-info">
+                              <div class="cart-item-name">${item.name}</div>
+                              <div>$${item.price.toLocaleString()} c/u</div>
+                              <div class="cart-item-quantity">
+                                  <button class="quantity-btn minus" data-index="${index}">-</button>
+                                  <span>${item.quantity}</span>
+                                  <button class="quantity-btn plus" data-index="${index}">+</button>
+                              </div>
+                              <div>Total: $${itemTotal.toLocaleString()}</div>
+                          </div>
+                          <button class="remove-item" data-index="${index}">×</button>
+                      `;
+          cartItemsContainer.appendChild(cartItemElement);
+        });
+
+        // Mostrar total
+        cartTotalElement.textContent = total.toLocaleString();
+        checkoutButton.style.display = 'block';
+
+        // Añadir eventos a los botones de cantidad y eliminar
+        document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+          button.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            if (cart[index].quantity > 1) {
+              cart[index].quantity -= 1;
+            } else {
+              cart.splice(index, 1);
+            }
+            updateCart();
+          });
+        });
+
+        document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+          button.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            cart[index].quantity += 1;
+            updateCart();
+          });
+        });
+
+        document.querySelectorAll('.remove-item').forEach(button => {
+          button.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            cart.splice(index, 1);
+            updateCart();
+          });
+        });
+      }
+    }
+
+    // Carrito button functionality
+    document.getElementById('cartButton').addEventListener('click', function() {
+      cartModal.style.display = 'block';
+    });
+
+    // Cerrar carrito con el botón X
+    closeCartButton.addEventListener("click", function() {
+      cartModal.style.display = 'none';
+    });
+
+    // Botón de finalizar compra
+    checkoutButton.addEventListener('click', function() {
+      alert(`¡Gracias por tu compra! Total: $${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString()}`);
+      cart = [];
+      updateCart();
+      cartModal.style.display = 'none';
+    });
+
+    // Cerrar carrito al hacer clic fuera de él
+    window.addEventListener('click', function(event) {
+      if (event.target == cartModal) {
+        cartModal.style.display = 'none';
+      }
+    });
+  </script>
+  </body>
+</html>

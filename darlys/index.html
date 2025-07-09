@@ -1,0 +1,870 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lino Urbano - Premium Clothing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courgette', cursive;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        /* Header with Animation */
+        header {
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+            color: #79021c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #79021c, transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 1.5rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #79021c;
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: #79021c;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #79021c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* User Auth Section */
+        .auth-container {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            background-color: #79021c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            background-color: #5a0115;
+        }
+
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            position: relative;
+        }
+
+        .close-auth {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .auth-form h2 {
+            color: #79021c;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #79021c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .form-submit:hover {
+            background-color: #5a0115;
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .form-toggle span {
+            color: #79021c;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #79021c;
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background-color: #5a0115;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            color: #79021c;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #79021c;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            color: #79021c;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            color: #ffffff;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #79021c;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: #79021c;
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+
+            header {
+                padding: 2rem 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .auth-container {
+                position: static;
+                transform: none;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="logo-container">
+        <h1 class="logo">Lino Urbano</h1>
+    </div>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Collections</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li>
+            <a href="#">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
+        </li>
+    </ul>
+    <div class="auth-container">
+        <button class="auth-btn" id="login-btn">Login</button>
+        <button class="auth-btn" id="register-btn">Register</button>
+    </div>
+</nav>
+
+<!-- Auth Modals -->
+<div class="auth-modal" id="login-modal">
+    <div class="auth-form">
+        <span class="close-auth">&times;</span>
+        <h2>Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <button type="submit" class="form-submit">Login</button>
+            <div class="form-toggle">
+                Don't have an account? <span id="show-register">Register</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="auth-modal" id="register-modal">
+    <div class="auth-form">
+        <span class="close-auth">&times;</span>
+        <h2>Register</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="register-name">Full Name</label>
+                <input type="text" id="register-name" required>
+            </div>
+            <div class="form-group">
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" required>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" required>
+            </div>
+            <div class="form-group">
+                <label for="register-confirm">Confirm Password</label>
+                <input type="password" id="register-confirm" required>
+            </div>
+            <button type="submit" class="form-submit">Register</button>
+            <div class="form-toggle">
+                Already have an account? <span id="show-login">Login</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-content">
+        <h2>Elevate Your Style</h2>
+        <p>Discover our premium collection of clothing designed for the modern individual.</p>
+        <a href="#" class="btn">Shop Now</a>
+    </div>
+</section>
+
+<section class="products">
+    <h2 class="section-title">Featured Products</h2>
+    <div class="product-grid">
+        <!-- Original Products -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/f8/19/72/f8197253f3aae43ed566e426fc59178d.jpg" alt="Classic White Shirt">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Classic White Shirt</h3>
+                <p class="product-price">$89.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/f8/5c/79/f85c79dd91c842e58f436869200c2a18.jpg" alt="Slim Fit Jeans">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Slim Fit Jeans</h3>
+                <p class="product-price">$129.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/32/c5/cc/32c5ccc87b7f640ae12d5a40005c5557.jpg" alt="Leather Jacket">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Leather Biker Jacket</h3>
+                <p class="product-price">$289.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/ad/82/c8/ad82c8503da7b137ca66d92767af04ac.jpg" alt="Premium Sneakers">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Premium Sneakers</h3>
+                <p class="product-price">$399.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <!-- New Products -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/c4/ea/1b/c4ea1bb51e31f77e23ca228f2910d3c2.jpg" alt="Casual T-Shirt">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Casual T-Shirt</h3>
+                <p class="product-price">$89.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/37/05/4c/37054cc84bb84183368e223011a47565.jpg" alt="Denim Jacket">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Denim Jacket</h3>
+                <p class="product-price">$149.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/53/ca/bd/53cabd44b81933bb70828aabc3091d7d.jpg" alt="Wool Coat">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Wool Coat</h3>
+                <p class="product-price">$249.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/e6/9e/25/e69e25f435c50aebde2d1100924b65ae.jpg" alt="Silk Blouse">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Silk Blouse</h3>
+                <p class="product-price">$119.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/6e/05/0c/6e050c93c30d6a401154ea2482206e61.jpg" alt="Summer Dress">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Summer Dress</h3>
+                <p class="product-price">$99.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/27/62/71/27627166482aee4c804c1b7be39e5c2f.jpg" alt="Oversized Hoodie">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Oversized Hoodie</h3>
+                <p class="product-price">$79.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/31/4d/d6/314dd61d6335e82d9fdf261eb7cd2cab.jpg" alt="Tailored Blazer">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Tailored Blazer</h3>
+                <p class="product-price">$199.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/36/73/30/36733014c3ccd82829ec5ad3d55af3d7.jpg" alt="Cashmere Sweater">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Cashmere Sweater</h3>
+                <p class="product-price">$179.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/64/75/5a/64755aa4eae70db4da54fd6b462ec6ba.jpg" alt="Linen Pants">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Linen Pants</h3>
+                <p class="product-price">$119.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/49/5a/fa/495afa03139ac6e090b92767c5f3f4db.jpg" alt="Silk Scarf">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Silk Scarf</h3>
+                <p class="product-price">$459.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.pinimg.com/736x/72/04/47/720447096053e83d216595ca09010086.jpg" alt="Leather Belt">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Leather Belt</h3>
+                <p class="product-price">$369.99</p>
+                <a href="#" class="btn add-to-cart">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Shop</h3>
+            <ul>
+                <li><a href="#">Men's Clothing</a></li>
+                <li><a href="#">Women's Clothing</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">New Arrivals</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Customer Service</h3>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Shipping & Returns</a></li>
+                <li><a href="#">Size Guide</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>About Lino Urbano</h3>
+            <ul>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Sustainability</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2025 Lino Urbano.         DARLYS NOVOA.</p>
+    </div>
+</footer>
+
+<script>
+    // Shopping Cart Functionality
+    let cartCount = 0;
+    const cartCountElement = document.querySelector('.cart-count');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartCount++;
+            cartCountElement.textContent = cartCount;
+
+            // Add animation feedback
+            button.textContent = 'Added!';
+            button.style.backgroundColor = '#4CAF50';
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+                button.style.backgroundColor = '#79021c';
+            }, 1000);
+        });
+    });
+
+    // Auth Modal Functionality
+    const loginBtn = document.getElementById('login-btn');
+    const registerBtn = document.getElementById('register-btn');
+    const loginModal = document.getElementById('login-modal');
+    const registerModal = document.getElementById('register-modal');
+    const closeButtons = document.querySelectorAll('.close-auth');
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+
+    loginBtn.addEventListener('click', () => {
+        loginModal.style.display = 'flex';
+    });
+
+    registerBtn.addEventListener('click', () => {
+        registerModal.style.display = 'flex';
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'none';
+        });
+    });
+
+    showRegister.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+        registerModal.style.display = 'flex';
+    });
+
+    showLogin.addEventListener('click', () => {
+        registerModal.style.display = 'none';
+        loginModal.style.display = 'flex';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.style.display = 'none';
+        }
+        if (e.target === registerModal) {
+            registerModal.style.display = 'none';
+        }
+    });
+
+    // Form Submission
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Login functionality would be implemented here');
+        loginModal.style.display = 'none';
+    });
+
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Registration functionality would be implemented here');
+        registerModal.style.display = 'none';
+    });
+</script>
+</body>
+</html>
+
+
+

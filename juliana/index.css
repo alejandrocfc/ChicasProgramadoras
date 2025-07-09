@@ -1,0 +1,233 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: #bde0fe;
+  color: #000000;
+  transition: background-color 0.s, color 0.3s;
+}
+
+header {
+  background-color: #48cae4;
+  color: #f8f9fa;
+  text-align: center;
+  padding: 25px 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+nav {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+nav button {
+  background: #daf0ee;
+  color: #4f000b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(255,111,97,0.4);
+  transition: all 0.3s;
+  min-width: 130px;
+}
+
+nav button:hover,
+nav button.active {
+  background: #c77dff;
+  color: #9055a2;
+  box-shadow: 0 4px 12px rgba(255,111,97,0.8);
+}
+
+main {
+  max-width: 1100px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 30px;
+}
+
+.card {
+  background: #daf0ee;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(255,111,97,0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(255,111,97,0.3);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card h3 {
+  margin: 15px 20px 8px;
+  color: #590d22;
+  font-weight: 700;
+   border-radius: 15px;
+}
+
+.card p {
+  margin: 0 20px 20px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 10px;
+  background: #c77dff;
+  color: #daf0ee;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+/* Modo oscuro */
+body.modo-oscuro {
+  background-color: #daf0ee;
+  color: #eee;
+}
+
+body.modo-oscuro header,
+body.modo-oscuro footer {
+  background-color: #daf0ee;
+  color: #fff;
+  box-shadow: none;
+}
+
+body.modo-oscuro nav button {
+  background: #c77dff;
+  color: #f6b3aa;
+  box-shadow: none;
+}
+
+body.modo-oscuro nav button.active,
+body.modo-oscuro nav button:hover {
+  background: #f6b3aa;
+  color: #b03a2e;
+  box-shadow: 0 0 15px #f6b3aa;
+}
+
+body.modo-oscuro .card {
+  background-color: #333;
+  box-shadow: 0 6px 15px rgba(255,111,97,0.4);
+}
+
+body.modo-oscuro .card h3 {
+  color: #daf0ee;
+}
+
+body.modo-oscuro .card p {
+  color: #daf0ee;
+}
+.buscador-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#buscador {
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 400px;
+  font-size: 14px;
+}
+
+/* Me gusta */
+.like-btn {
+  background: transparent;
+  border: none;
+  color: #ff6f61;
+  font-size: 16px;
+  margin: 10px 20px 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.like-btn.liked {
+  color: red;
+  transform: scale(1.2);
+}
+
+/* Notificación flotante */
+#notificacion {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ff6f61;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+#notificacion.visible {
+  opacity: 1;
+}
+
+/* Botón subir */
+#subirBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 12px 16px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#subirBtn:hover {
+  background: #e04f42;
+}
+.filter-btn {
+  padding: 10px 15px;
+  background-color: #f08ca2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: #d46a84;
+}
